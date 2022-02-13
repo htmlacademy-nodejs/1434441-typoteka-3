@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Иван Ломов](https://up.htmlacademy.ru/nodejs/3/user/1434441).
-* Наставник: `Неизвестно`.
+* Наставник: [Юрий Кучма](https://up.htmlacademy.ru/nodejs/3/user/74996).
 
 ---
 

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sorokkamst/1434441-typoteka-3#readme",
   "devDependencies": {
+    "dayjs": "^1.10.7",
     "eslint": "8.9.0",
     "eslint-config-htmlacademy": "0.6.0"
   }

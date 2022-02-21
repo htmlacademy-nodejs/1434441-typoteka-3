@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const dayjs = require('dayjs');
+const {ExitCode} = require("../constants");
 
 const {
   getRandomInt,
@@ -10,6 +11,11 @@ const {
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = 'mocks.json';
+
+const announceCount = {
+  min: 1,
+  max: 5,
+};
 
 const TITLES = [
   'Учим HTML и CSS',
@@ -50,7 +56,7 @@ const offersCount = {
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
     'title': TITLES[getRandomInt(0, TITLES.length - 1)],
-    'announce': shuffle(DESCRIPTION).slice(0, getRandomInt(1, 5)).join(' '),
+    'announce': shuffle(DESCRIPTION).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(' '),
     'fulltext': shuffle(DESCRIPTION).slice(0, DESCRIPTION.length - 1).join(' '),
     'createdDate': dayjs(randomDate).format('YYYY-MM-DD HH:mm:ss'),
     'category': [shuffle(CATEGORIES).slice(0, CATEGORIES.length -1).join(', ')],
@@ -62,6 +68,12 @@ module.exports = {
   run(args) {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
+
+    if (countOffer > 1000) {
+      console.error(`Не больше 1000 публикаций`);
+      process.exit(ExitCode.error);
+    }
+
     const content = JSON.stringify(generateOffers(countOffer), null, 2);
 
     fs.writeFile(FILE_NAME, content, (err) => {

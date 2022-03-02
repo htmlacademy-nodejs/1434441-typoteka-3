@@ -12,6 +12,7 @@ const {
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = 'mocks.json';
+const OFFER_MAX_COUNT = 1000;
 
 const announceCount = {
   min: 1,
@@ -70,7 +71,7 @@ module.exports = {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
-    if (countOffer > 1000) {
+    if (countOffer > OFFER_MAX_COUNT) {
       console.error(`Не больше 1000 публикаций`);
       process.exit(ExitCode.error);
     }

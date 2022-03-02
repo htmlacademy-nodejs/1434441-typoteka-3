@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const dayjs = require('dayjs');
+const chalk = require('chalk');
 const {ExitCode} = require("../constants");
 
 const {
@@ -65,7 +66,7 @@ const generateOffers = (count) => (
 
 module.exports = {
   name: `--generate`,
-  run(args) {
+  async run(args) {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
@@ -76,12 +77,12 @@ module.exports = {
 
     const content = JSON.stringify(generateOffers(countOffer), null, 2);
 
-    fs.writeFile(FILE_NAME, content, (err) => {
+    await fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
-        return console.error(`Can't write data to file...`);
+        return console.error(chalk.red(`Can't write data to file...`));
       }
 
-      return console.log(`Operation success. File created.`);
+      return console.log(chalk.green(`Operation success. File created.`));
     });
   }
 };

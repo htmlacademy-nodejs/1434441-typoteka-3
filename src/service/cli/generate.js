@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('fs').promises;
 const dayjs = require('dayjs');
 const chalk = require('chalk');
 const {ExitCode} = require("../constants");
@@ -77,12 +77,11 @@ module.exports = {
 
     const content = JSON.stringify(generateOffers(countOffer), null, 2);
 
-    await fs.writeFile(FILE_NAME, content, (err) => {
-      if (err) {
-        return console.error(chalk.red(`Can't write data to file...`));
-      }
-
-      return console.log(chalk.green(`Operation success. File created.`));
-    });
+    try {
+      await fs.writeFile(FILE_NAME, content);
+      console.log(chalk.green(`Operation success. File created.`));
+    } catch {
+      console.error(chalk.red(`Can't write data to file...`));
+    }
   }
 };

@@ -72,7 +72,7 @@ module.exports = {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
     if (countOffer > OFFER_MAX_COUNT) {
-      console.error(`Не больше 1000 публикаций`);
+      console.error(`Не больше ${OFFER_MAX_COUNT} публикаций`);
       process.exit(ExitCode.error);
     }
 

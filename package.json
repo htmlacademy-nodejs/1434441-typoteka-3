@@ -4,10 +4,9 @@
   "description": "Типотека",
   "main": "./src/service/service.js",
   "scripts": {
-    "start": "node ./src/service/service.js",
+    "start": "nodemon ./src/service/service.js",
     "test": "npm run eslint",
-    "eslint": "eslint --ext .js src/",
-    "nodemon": "nodemon ./src.main.js"
+    "eslint": "eslint --ext .js src/"
   },
   "repository": {
     "type": "git",

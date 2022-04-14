@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require(`express`);
 const personalRoutes = require(`./routes/personal`);
 const articleRouter = require(`./routes/article`);

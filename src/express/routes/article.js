@@ -1,3 +1,5 @@
+'use strict';
+
 const {Router} = require(`express`);
 const articleRouter = new Router();
 

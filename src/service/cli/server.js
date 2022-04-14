@@ -4,7 +4,7 @@ const http = require(`http`);
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 
-const { HttpCode } = require('../constants')
+const {HttpCode} = require(`../constants`);
 
 const DEFAULT_PORT = 3000;
 const FILENAME = `mocks.json`;
@@ -36,7 +36,7 @@ module.exports = {
       const notFoundMessageText = `Not Found`;
 
       switch (req.url) {
-        case '/':
+        case `/`:
           try {
             const mocksFile = await fs.readFile(FILENAME);
             const mocks = JSON.parse(mocksFile);
@@ -54,13 +54,13 @@ module.exports = {
       }
     };
 
-  http.createServer(onConnect)
-    .listen(port)
-    .on(`listening`, () => {
-      console.info(chalk.green(`Ожидаю соединений на ${port}`));
-    })
-    .on(`error`, ({message}) => {
-      console.error(chalk.red(`Ошибка создания сервера: ${message}`))
-    });
+    http.createServer(onConnect)
+      .listen(port)
+      .on(`listening`, () => {
+        console.info(chalk.green(`Ожидаю соединений на ${port}`));
+      })
+      .on(`error`, ({message}) => {
+        console.error(chalk.red(`Ошибка создания сервера: ${message}`));
+      });
   }
-}
+};

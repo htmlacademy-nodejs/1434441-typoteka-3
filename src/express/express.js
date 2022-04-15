@@ -5,6 +5,7 @@ const personalRoutes = require(`./routes/personal`);
 const articleRouter = require(`./routes/article`);
 
 const app = express();
+
 const port = 8080;
 app.listen(port);
 

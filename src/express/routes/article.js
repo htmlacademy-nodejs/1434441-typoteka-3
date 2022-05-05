@@ -3,17 +3,17 @@
 const {Router} = require(`express`);
 const articleRouter = new Router();
 
-articleRouter.get(`/add`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+articleRouter.get(`/post`, (req, res) => {
+  res.render(`post`);
 });
 articleRouter.get(`/category/:id`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`articles-by-category`);
 });
-articleRouter.get(`/edit/:id`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+articleRouter.get(`/post/:id`, (req, res) => {
+  res.render(`post-detail`);
 });
 articleRouter.get(`/:id`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`${req.originalUrl}`);
 });
 
 module.exports = articleRouter;

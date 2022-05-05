@@ -13,17 +13,28 @@ app.set(`view engine`, `pug`);
 
 app.use(express.static(__dirname + `/public`));
 
-app.get(`/`, (req, res) => {
-  res.render(`main`);
-});
-app.get(`/register`, (req, res) => {
-  res.send(`${req.originalUrl}`);
-});
 app.get(`/login`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`login`);
 });
+
+app.get(`/register`, (req, res) => {
+  res.render(`sign-up`);
+});
+
 app.get(`/search`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`search`);
+});
+
+app.get(`/my`, (req, res) => {
+  res.render(`my`);
+});
+
+app.get(`/404`, (req, res) => {
+  res.render(`errors/404`);
+});
+
+app.get(`/500`, (req, res) => {
+  res.render(`errors/500`);
 });
 
 app.use(`/my`, personalRoutes);

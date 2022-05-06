@@ -4,13 +4,13 @@ const {Router} = require(`express`);
 const personalRouter = new Router();
 
 personalRouter.get(`/`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`main`);
 });
 personalRouter.get(`/comments`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`comments`);
 });
 personalRouter.get(`/categories`, (req, res) => {
-  res.send(`${req.originalUrl}`);
+  res.render(`all-categories`);
 });
 
 module.exports = personalRouter;

@@ -1,0 +1,10 @@
+doctype html
+html(lang="ru")
+  head
+    include ../base/head
+  body
+    div(class=`wrapper` + (cn ? ` ` + cn : ``))
+      block header
+      block main
+      include footer
+      include ../base/scripts

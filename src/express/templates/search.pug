@@ -1,0 +1,15 @@
+extends layout/layout
+
+block header
+  include layout/header-no-auth
+
+block main
+  main
+    section.search-page
+      .search-page__wrapper
+        h1 Поиск
+        .search.search-page__form
+          form(action='#' method='get')
+            label
+              input(type='text' name='query' placeholder='Что ищем?')
+            button.search__button.button.button--transparent(type='submit') Найти

@@ -34,8 +34,8 @@ module.exports = {
       }
     })
 
-    app.get('*', (req, res) => {
-      res.send(notFoundMessageText)
+    app.use((req, res) => {
+      res.status(404).send(notFoundMessageText)
     })
 
     app

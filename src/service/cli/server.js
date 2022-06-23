@@ -30,7 +30,7 @@ module.exports = {
         res.send(mocks);
 
       } catch (err) {
-        res.send(notFoundMessageText);
+        res.status(500).send(notFoundMessageText);
       }
     })
 

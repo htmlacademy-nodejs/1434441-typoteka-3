@@ -1,13 +1,15 @@
 'use strict';
 
-const http = require(`http`);
+const DEFAULT_PORT = 3000;
+const FILENAME = `mocks.json`;
+
+const express = require('express');
+const app = express();
+
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 
-const {HttpCode} = require(`../constants`);
-
-const DEFAULT_PORT = 3000;
-const FILENAME = `mocks.json`;
+const notFoundMessageText = `Not Found`;
 
 module.exports = {
   name: `--server`,
@@ -15,46 +17,28 @@ module.exports = {
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
 
-    const sendResponse = (res, statusCode, message) => {
-      const template = `
-        <!Doctype html>
-          <html lang="ru">
-          <head>
-            <title>With love from Node</title>
-          </head>
-          <body>${message}</body>
-        </html>`.trim();
+    app.get('/posts', async (req, res) => {
 
-      res.writeHead(statusCode, {
-        'Content-Type': `text/html; charset=UTF-8`,
-      });
+      try {
+        const mocksFile = await fs.readFile(FILENAME);
+        const mocks = JSON.parse(mocksFile);
 
-      res.end(template);
-    };
+        if (!mocks || mocks.length === 0) {
+          res.send([])
+          return
+        }
+        res.send(mocks);
 
-    const onConnect = async (req, res) => {
-      const notFoundMessageText = `Not Found`;
-
-      switch (req.url) {
-        case `/`:
-          try {
-            const mocksFile = await fs.readFile(FILENAME);
-            const mocks = JSON.parse(mocksFile);
-            const message = mocks.map((post) =>
-              `<li>${post.title}</li>`).join(``);
-            sendResponse(res, HttpCode.OK, `<ul>${message}</ul>`);
-          } catch (err) {
-            sendResponse(res, HttpCode.NOT_FOUND, notFoundMessageText);
-          }
-
-          break;
-        default:
-          sendResponse(res, HttpCode.NOT_FOUND, notFoundMessageText);
-          break;
+      } catch (err) {
+        res.status(500).send(notFoundMessageText);
       }
-    };
+    })
 
-    http.createServer(onConnect)
+    app.use((req, res) => {
+      res.status(404).send(notFoundMessageText)
+    })
+
+    app
       .listen(port)
       .on(`listening`, () => {
         console.info(chalk.green(`Ожидаю соединений на ${port}`));

@@ -3,6 +3,7 @@
 const fs = require(`fs`).promises;
 const dayjs = require(`dayjs`);
 const chalk = require(`chalk`);
+const {nanoid} = require("nanoid");
 const {ExitCode} = require(`../constants`);
 
 const {
@@ -13,6 +14,22 @@ const {
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
 const OFFER_MAX_COUNT = 1000;
+const MAX_ID_LENGHT = 6;
+
+const announceCount = {
+  min: 1,
+  max: 5,
+};
+
+const commentsCount = {
+  min: 1,
+  max: 3,
+};
+
+const date = new Date();
+const dateNowUnix = +date;
+const datePastUnix = date.setMonth(date.getMonth() - 3);
+const randomDate = getRandomInt(dateNowUnix, datePastUnix);
 
 const getData = async (fileName) => {
   try {
@@ -23,23 +40,26 @@ const getData = async (fileName) => {
   }
 };
 
-const announceCount = {
-  min: 1,
-  max: 5,
+const decomposeComments = (comments) => {
+  const decomposeArr = [];
+  comments.forEach((comment) => {
+    decomposeArr.push({
+      id: nanoid(MAX_ID_LENGHT),
+      text: comment,
+    })
+  })
+  return decomposeArr;
 };
 
-const date = new Date();
-const dateNowUnix = +date;
-const datePastUnix = date.setMonth(date.getMonth() - 3);
-const randomDate = getRandomInt(dateNowUnix, datePastUnix);
-
-const generateOffers = (count, titles, categories, descriptions) => (
-  Array(count).fill({}).map(() => ({
+const generateOffers = (count, titles, categories, descriptions, comments) => (
+Array(count).fill({}).map(() => ({
+    'id': nanoid(MAX_ID_LENGHT),
     'title': titles[getRandomInt(0, titles.length - 1)],
     'announce': shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),
     'fulltext': shuffle(descriptions).slice(0, descriptions.length - 1).join(` `),
     'createdDate': dayjs(randomDate).format(`YYYY-MM-DD HH:mm:ss`),
     'category': [shuffle(categories).slice(0, categories.length - 1).join(`, `)],
+    'comments': decomposeComments(shuffle(comments).slice(0, getRandomInt(commentsCount.min, commentsCount.max))),
   }))
 );
 
@@ -52,13 +72,14 @@ module.exports = {
     const descriptions = await getData(`descriptions`);
     const categories = await getData(`categories`);
     const titles = await getData(`titles`);
+    const comments = await getData(`comments`);
 
     if (countOffer > OFFER_MAX_COUNT) {
       console.error(`Не больше ${OFFER_MAX_COUNT} публикаций`);
       process.exit(ExitCode.error);
     }
 
-    const content = JSON.stringify(generateOffers(countOffer, titles, categories, descriptions), null, 2);
+    const content = JSON.stringify(generateOffers(countOffer, titles, categories, descriptions, comments), null, 2);
 
     try {
       await fs.writeFile(FILE_NAME, content);

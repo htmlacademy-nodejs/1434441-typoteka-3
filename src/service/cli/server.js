@@ -4,12 +4,17 @@ const DEFAULT_PORT = 3000;
 
 const express = require('express');
 const app = express();
+
 const getMockData = require(`../lib/get-mock-data`);
-const {HttpCode} = require(`../constants`);
+const {HttpCode, API_PREFIX} = require(`../constants`);
+const routes = require(`../api`);
 
 const chalk = require(`chalk`);
 
 const notFoundMessageText = `Not Found`;
+
+app.use(express.json());
+app.use(API_PREFIX, routes);
 
 module.exports = {
   name: `--server`,

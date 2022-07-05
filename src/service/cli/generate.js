@@ -4,7 +4,7 @@ const fs = require(`fs`).promises;
 const dayjs = require(`dayjs`);
 const chalk = require(`chalk`);
 const {nanoid} = require("nanoid");
-const {ExitCode} = require(`../constants`);
+const {ExitCode, OFFER_MAX_COUNT, MAX_ID_LENGTH} = require(`../constants`);
 
 const {
   getRandomInt,
@@ -13,8 +13,6 @@ const {
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
-const OFFER_MAX_COUNT = 1000;
-const MAX_ID_LENGHT = 6;
 
 const announceCount = {
   min: 1,
@@ -44,7 +42,7 @@ const decomposeComments = (comments) => {
   const decomposeArr = [];
   comments.forEach((comment) => {
     decomposeArr.push({
-      id: nanoid(MAX_ID_LENGHT),
+      id: nanoid(MAX_ID_LENGTH),
       text: comment,
     })
   })
@@ -53,7 +51,7 @@ const decomposeComments = (comments) => {
 
 const generateOffers = (count, titles, categories, descriptions, comments) => (
 Array(count).fill({}).map(() => ({
-    'id': nanoid(MAX_ID_LENGHT),
+    'id': nanoid(MAX_ID_LENGTH),
     'title': titles[getRandomInt(0, titles.length - 1)],
     'announce': shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),
     'fulltext': shuffle(descriptions).slice(0, descriptions.length - 1).join(` `),

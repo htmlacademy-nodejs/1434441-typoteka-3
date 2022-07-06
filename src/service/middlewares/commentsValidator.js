@@ -1,16 +1,16 @@
 'use strict';
 
 const {HttpCode} = require(`../constants`);
-const commentKeys = ['text'];
+const commentKeys = [`text`];
 
 module.exports = (req, res, next) => {
   const commentData = req.body;
   const keys = Object.keys(commentData);
-  const keysExist = commentKeys.every(key => keys.includes(key));
+  const keysExist = commentKeys.every((key) => keys.includes(key));
 
-  if(!keysExist) {
+  if (!keysExist) {
     res.status(HttpCode.BAD_REQUEST).send(`Bad request`);
-    return
+    return;
   }
 
   next();

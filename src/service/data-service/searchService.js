@@ -7,7 +7,7 @@ class SearchService {
 
   findAll(searchText) {
     return this._articles.
-      filter(article => article.title.includes(searchText));
+      filter((article) => article.title.includes(searchText));
   }
 }
 

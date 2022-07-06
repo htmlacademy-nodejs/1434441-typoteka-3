@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 class CategoriesService {
   constructor(articles) {
@@ -7,8 +7,8 @@ class CategoriesService {
 
   findAll() {
     return [...new Set(
-      this._articles.flatMap(article => article.category)
-    )]
+        this._articles.flatMap((article) => article.category)
+    )];
   }
 }
 

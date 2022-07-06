@@ -3,7 +3,7 @@
 const fs = require(`fs`).promises;
 const dayjs = require(`dayjs`);
 const chalk = require(`chalk`);
-const {nanoid} = require("nanoid");
+const {nanoid} = require(`nanoid`);
 const {ExitCode, OFFER_MAX_COUNT, MAX_ID_LENGTH} = require(`../constants`);
 
 const {
@@ -44,7 +44,7 @@ const decomposeComments = (comments) => comments.map((comment) => ({
 }));
 
 const generateOffers = (count, titles, categories, descriptions, comments) => (
-Array(count).fill({}).map(() => ({
+  Array(count).fill({}).map(() => ({
     id: nanoid(MAX_ID_LENGTH),
     title: titles[getRandomInt(0, titles.length - 1)],
     announce: shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),

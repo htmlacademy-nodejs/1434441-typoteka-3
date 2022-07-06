@@ -5,7 +5,7 @@ const {HttpCode} = require(`../constants`);
 
 const searchValidator = require(`../middlewares/searchValidator`);
 
-const searchRouter = Router();
+const searchRouter = new Router();
 
 module.exports = (app, searchService) => {
   app.use(`/search`, searchRouter);

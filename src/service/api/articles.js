@@ -6,7 +6,7 @@ const {HttpCode} = require(`../constants`);
 const articlesValidator = require(`../middlewares/articlesValidator`);
 const articlesSearch = require(`../middlewares/articlesSearch`);
 
-const articlesRouter = Router();
+const articlesRouter = new Router();
 
 module.exports = (app, articlesService) => {
   app.use(`/articles`, articlesRouter);
@@ -26,8 +26,8 @@ module.exports = (app, articlesService) => {
     const {articleId} = req.params;
     const article = await articlesService.findOne(articleId);
 
-    if(!article) {
-      return res.status(HttpCode.NOT_FOUND).send(`Article ${articleId} not found`)
+    if (!article) {
+      return res.status(HttpCode.NOT_FOUND).send(`Article ${articleId} not found`);
     }
 
     return res.status(HttpCode.OK).json(article);
@@ -44,8 +44,8 @@ module.exports = (app, articlesService) => {
     const {articleId} = req.params;
     const article = await articlesService.delete(articleId);
 
-    if(!article) {
-      res.status(HttpCode.NOT_FOUND).send(`Not found`)
+    if (!article) {
+      res.status(HttpCode.NOT_FOUND).send(`Not found`);
     }
 
     return res.status(HttpCode.OK).json(article);

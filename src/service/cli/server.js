@@ -2,7 +2,7 @@
 
 const DEFAULT_PORT = 3000;
 
-const express = require('express');
+const express = require(`express`);
 const app = express();
 
 const getMockData = require(`../lib/get-mock-data`);
@@ -22,15 +22,15 @@ module.exports = {
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
 
-    app.get('/posts', async (req, res) => {
+    app.get(`/posts`, async (req, res) => {
 
       const mocks = getMockData();
-      mocks.then(mocks => {
-        if (!mocks || mocks.length === 0) {
+      mocks.then((data) => {
+        if (!data || data.length === 0) {
           res.send([]);
-          return
+          return;
         }
-        res.send(mocks);
+        res.send(data);
       })
         .catch(() =>
           res.send(notFoundMessageText));

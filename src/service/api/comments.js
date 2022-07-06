@@ -6,7 +6,7 @@ const {HttpCode} = require(`../constants`);
 const articlesSearch = require(`../middlewares/articlesSearch`);
 const commentsValidator = require(`../middlewares/commentsValidator`);
 
-const commentsRouter = Router();
+const commentsRouter = new Router();
 
 module.exports = (app, articlesService, commentsService) => {
   app.use(`/articles`, commentsRouter);
@@ -15,7 +15,7 @@ module.exports = (app, articlesService, commentsService) => {
     const {article} = res.locals;
     const comments = await commentsService.findAll(article.id);
 
-    if(!comments) {
+    if (!comments) {
       res.status(HttpCode.NOT_FOUND).send(`Not found`);
     }
 
@@ -26,7 +26,7 @@ module.exports = (app, articlesService, commentsService) => {
     const {article} = res.locals;
     const comment = await commentsService.create(article.id, req.body);
 
-    if(!comment) {
+    if (!comment) {
       res.status(HttpCode.NOT_FOUND).send(`Not found`);
     }
 
@@ -38,7 +38,7 @@ module.exports = (app, articlesService, commentsService) => {
     const {commentId} = req.params;
     const comment = await commentsService.delete(article.id, commentId);
 
-    if(!comment) {
+    if (!comment) {
       res.status(HttpCode.NOT_FOUND).send(`Not found`);
     }
 

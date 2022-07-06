@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const {nanoid} = require(`nanoid`);
 const {MAX_ID_LENGTH} = require(`../constants`);
@@ -13,7 +13,7 @@ class ArticlesService {
   }
 
   findOne(articlesId) {
-    return this._articles.find(article => article.id === articlesId);
+    return this._articles.find((article) => article.id === articlesId);
   }
 
   create(articleData) {
@@ -23,12 +23,12 @@ class ArticlesService {
   }
 
   update(articleId, articleData) {
-    const oldArticle = this._articles.find(article => article.id === articleId);
+    const oldArticle = this._articles.find((article) => article.id === articleId);
     return Object.assign(oldArticle, articleData);
   }
 
   delete(articleId) {
-    const articleIndex = this._articles.findIndex(article => article.id === articleId);
+    const articleIndex = this._articles.findIndex((article) => article.id === articleId);
 
     if (articleIndex === -1) {
       return null;

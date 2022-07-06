@@ -3,7 +3,7 @@
 const {Router} = require(`express`);
 const {HttpCode} = require(`../constants`);
 
-const categoriesRouter = Router();
+const categoriesRouter = new Router();
 
 module.exports = (app, categoriesService) => {
   app.use(`/categories`, categoriesRouter);

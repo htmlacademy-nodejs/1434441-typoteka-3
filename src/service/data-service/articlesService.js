@@ -28,14 +28,14 @@ class ArticlesService {
   }
 
   delete(articleId) {
-    const article = this._articles.find(article => article.id === articleId);
+    const articleIndex = this._articles.findIndex(article => article.id === articleId);
 
-    if(!article) {
+    if (articleIndex === -1) {
       return null;
     }
 
-    this._articles = this._articles.filter(article => article.id !== articleId);
-    return article;
+    this._articles = [...this._articles.slice(0, articleIndex), ...this._articles.slice(articleIndex + 1)];
+    return this._articles[articleIndex];
   }
 }
 

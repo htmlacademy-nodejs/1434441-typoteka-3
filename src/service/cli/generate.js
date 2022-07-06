@@ -45,13 +45,13 @@ const decomposeComments = (comments) => comments.map((comment) => ({
 
 const generateOffers = (count, titles, categories, descriptions, comments) => (
 Array(count).fill({}).map(() => ({
-    'id': nanoid(MAX_ID_LENGTH),
-    'title': titles[getRandomInt(0, titles.length - 1)],
-    'announce': shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),
-    'fulltext': shuffle(descriptions).slice(0, descriptions.length - 1).join(` `),
-    'createdDate': dayjs(randomDate).format(`YYYY-MM-DD HH:mm:ss`),
-    'category': [shuffle(categories).slice(0, categories.length - 1).join(`, `)],
-    'comments': decomposeComments(shuffle(comments).slice(0, getRandomInt(commentsCount.min, commentsCount.max))),
+    id: nanoid(MAX_ID_LENGTH),
+    title: titles[getRandomInt(0, titles.length - 1)],
+    announce: shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),
+    fulltext: shuffle(descriptions).slice(0, descriptions.length - 1).join(` `),
+    createdDate: dayjs(randomDate).format(`YYYY-MM-DD HH:mm:ss`),
+    category: [shuffle(categories).slice(0, categories.length - 1).join(`, `)],
+    comments: decomposeComments(shuffle(comments).slice(0, getRandomInt(commentsCount.min, commentsCount.max))),
   }))
 );
 

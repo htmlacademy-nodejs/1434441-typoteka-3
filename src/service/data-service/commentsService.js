@@ -13,7 +13,7 @@ class CommentsService {
     return article.comments;
   }
 
-  drop(articleId, commentId) {
+  delete(articleId, commentId) {
     const article = this._articles.find(article => article.id === articleId);
     const comment = article.comments.find(comment => comment.id === commentId);
 

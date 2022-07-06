@@ -26,17 +26,16 @@ module.exports = {
 
       const mocks = getMockData();
       mocks.then(mocks => {
-          if (!mocks || mocks.length === 0) {
-            res.send([])
-            return
-          }
-          res.send(mocks);
-        })
-        // кажется этот catch никогда не сработает, но я могу ошибаться
-        .catch (() =>
-          res.send(notFoundMessageText)
-      );
+        if (!mocks || mocks.length === 0) {
+          res.send([]);
+          return
+        }
+        res.send(mocks);
+      })
+        .catch(() =>
+          res.send(notFoundMessageText));
     });
+
 
     app.use((req, res) => {
       res.status(HttpCode.NOT_FOUND).send(notFoundMessageText);
@@ -52,3 +51,4 @@ module.exports = {
       });
   }
 };
+

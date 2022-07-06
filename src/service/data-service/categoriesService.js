@@ -6,12 +6,9 @@ class CategoriesService {
   }
 
   findAll() {
-    const articles = this._articles.reduce((acc, article) => {
-      article.category.forEach((category) => acc.add(category));
-      return acc;
-    }, new Set());
-
-    return [...articles];
+    return [...new Set(
+      this._articles.flatMap(article => article.category)
+    )]
   }
 }
 

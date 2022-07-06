@@ -25,7 +25,7 @@ const commentsCount = {
 };
 
 const date = new Date();
-const dateNowUnix = +date;
+const dateNowUnix = Number(date);
 const datePastUnix = date.setMonth(date.getMonth() - 3);
 const randomDate = getRandomInt(dateNowUnix, datePastUnix);
 
@@ -38,16 +38,10 @@ const getData = async (fileName) => {
   }
 };
 
-const decomposeComments = (comments) => {
-  const decomposeArr = [];
-  comments.forEach((comment) => {
-    decomposeArr.push({
-      id: nanoid(MAX_ID_LENGTH),
-      text: comment,
-    })
-  })
-  return decomposeArr;
-};
+const decomposeComments = (comments) => comments.map((comment) => ({
+  id: nanoid(MAX_ID_LENGTH),
+  text: comment,
+}));
 
 const generateOffers = (count, titles, categories, descriptions, comments) => (
 Array(count).fill({}).map(() => ({

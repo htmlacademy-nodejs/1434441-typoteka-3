@@ -36,7 +36,7 @@ module.exports = (app, articlesService, commentsService) => {
   commentsRouter.delete(`/:articleId/comments/:commentId`, [articlesSearch(articlesService), commentsValidator], async (req, res) => {
     const {article} = res.locals;
     const {commentId} = req.params;
-    const comment = await commentsService.drop(article.id, commentId);
+    const comment = await commentsService.delete(article.id, commentId);
 
     if(!comment) {
       res.status(HttpCode.NOT_FOUND).send(`Not found`);

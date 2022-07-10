@@ -7,7 +7,6 @@ const articles = require(`./comments`);
 const DataService = require(`../data-service/commentsService`);
 const {HttpCode} = require(`../constants`);
 
-/* eslint-disable */
 const mockData = [
   {
     "id": "tRvlxQ",
@@ -102,7 +101,6 @@ const mockData = [
     ]
   }
 ];
-/* eslint-enable */
 
 const createAPI = () => {
   const app = express();

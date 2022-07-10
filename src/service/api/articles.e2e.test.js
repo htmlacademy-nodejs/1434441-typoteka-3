@@ -7,7 +7,6 @@ const articles = require(`./articles`);
 const DataService = require(`../data-service/articlesService`);
 const {HttpCode} = require(`../constants`);
 
-/* eslint-disable */
 const mockData = [
   {
     "id": "tRvlxQ",
@@ -102,7 +101,6 @@ const mockData = [
     ]
   }
 ];
-/* eslint-enable */
 
 const createAPI = () => {
   const app = express();
@@ -262,66 +260,66 @@ describe(`API changes existent offer`,
 
 test(`API returns status code 404 when trying to change non-existent offer`,
   () => {
-  const validArticle = {
-    title: `На маленьком плоту`,
-    announce: `Сквозь бури, дождь и грозы, взяв только сны, грёзы и детскую мечту, я тихо уплыву, лишь в дом проникнет нолночь`,
-    fulltext: `Чтоб рифмами наполнить, мир, в котором я живу. Ну и пусть! Будет нелёгким мой путь, тянут ко дну боль и грусть прежних ошибок груз`,
-    createdDate: `2022-05-21 19:20:00`,
-    category: [
-      "Программирование, Кино, IT, Железо"
-    ],
-  };
+    const validArticle = {
+      title: `На маленьком плоту`,
+      announce: `Сквозь бури, дождь и грозы, взяв только сны, грёзы и детскую мечту, я тихо уплыву, лишь в дом проникнет нолночь`,
+      fulltext: `Чтоб рифмами наполнить, мир, в котором я живу. Ну и пусть! Будет нелёгким мой путь, тянут ко дну боль и грусть прежних ошибок груз`,
+      createdDate: `2022-05-21 19:20:00`,
+      category: [
+        "Программирование, Кино, IT, Железо"
+      ],
+    };
 
-  const app = createAPI();
+    const app = createAPI();
 
-  return request(app)
-    .put(`/article/NOEXST`)
-    .send(validArticle)
-    .expect(HttpCode.NOT_FOUND);
-});
+    return request(app)
+      .put(`/article/NOEXST`)
+      .send(validArticle)
+      .expect(HttpCode.NOT_FOUND);
+  });
 
 test(`API returns status code 400 when trying to change an offer with invalid data`,
   () => {
-  const invalidArticle = {
-    title: `На маленьком плоту`,
-    announce: `Сквозь бури, дождь и грозы, взяв только сны, грёзы и детскую мечту, я тихо уплыву, лишь в дом проникнет нолночь`,
-    fulltext: `Чтоб рифмами наполнить, мир, в котором я живу. Ну и пусть! Будет нелёгким мой путь, тянут ко дну боль и грусть прежних ошибок груз`,
-    createdDate: `2022-05-21 19:20:00`,
-  };
+    const invalidArticle = {
+      title: `На маленьком плоту`,
+      announce: `Сквозь бури, дождь и грозы, взяв только сны, грёзы и детскую мечту, я тихо уплыву, лишь в дом проникнет нолночь`,
+      fulltext: `Чтоб рифмами наполнить, мир, в котором я живу. Ну и пусть! Будет нелёгким мой путь, тянут ко дну боль и грусть прежних ошибок груз`,
+      createdDate: `2022-05-21 19:20:00`,
+    };
 
-  const app = createAPI();
+    const app = createAPI();
 
-  return request(app)
-    .put(`/articles/tRvlxQ`)
-    .send(invalidArticle)
-    .expect(HttpCode.BAD_REQUEST);
-});
+    return request(app)
+      .put(`/articles/tRvlxQ`)
+      .send(invalidArticle)
+      .expect(HttpCode.BAD_REQUEST);
+  });
 
 describe(`API correctly deletes an offer`,
   () => {
-  const app = createAPI();
+    const app = createAPI();
 
-  let response;
+    let response;
 
-  beforeAll(async () => {
-    response = await request(app)
-      .delete(`/articles/tRvlxQ`);
+    beforeAll(async () => {
+      response = await request(app)
+        .delete(`/articles/tRvlxQ`);
+    });
+
+    test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
+    test(`Returns deleted offer`, () => expect(response.body.id).toBe(`tRvlxQ`));
+    test(`Offer count is 4 now`, () => {
+      request(app)
+        .get(`/articles`)
+        .expect((res) => expect(res.body.length).toBe(4));
+    });
   });
-
-  test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
-  test(`Returns deleted offer`, () => expect(response.body.id).toBe(`tRvlxQ`));
-  test(`Offer count is 4 now`, () => {
-    request(app)
-      .get(`/articles`)
-      .expect((res) => expect(res.body.length).toBe(4));
-  });
-});
 
 test(`API refuses to delete non-existent offer`,
   () => {
-  const app = createAPI();
+    const app = createAPI();
 
-  return request(app)
-    .delete(`/articles/NOTEXST`)
-    .expect(HttpCode.NOT_FOUND)
-});
+    return request(app)
+      .delete(`/articles/NOTEXST`)
+      .expect(HttpCode.NOT_FOUND)
+  });

@@ -10,7 +10,6 @@ const {HttpCode} = require(`../constants`);
 const app = express();
 app.use(express.json());
 
-/* eslint-disable */
 const mockData = [
   {
     "id": "PPJXjU",
@@ -144,7 +143,6 @@ const mockData = [
     ]
   }
 ];
-/* eslint-enable */
 
 categories(app, new DataService(mockData));
 

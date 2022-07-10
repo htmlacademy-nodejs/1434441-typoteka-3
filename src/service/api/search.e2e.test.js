@@ -10,7 +10,6 @@ const {HttpCode} = require(`../constants`);
 const app = express();
 app.use(express.json());
 
-/* eslint-disable */
 const mockData = [
   {
     "id": "tRvlxQ",
@@ -105,29 +104,28 @@ const mockData = [
     ]
   }
 ];
-/* eslint-enable */
 
 search(app, new DataService(mockData));
 
 describe(`API returns articles bases on search query`,
-    () => {
-      let response;
+  () => {
+    let response;
 
-      beforeAll(async () => {
-        response = await request(app)
-          .get(`/search`)
-          .query({
-            query: `Рок — это протест`
-          });
-      });
-
-      test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
-      test(`Expect 2 articles found`, () => expect(response.body.length).toBe(2));
-      test(`First found article id`, () => expect(response.body[0].id).toBe(`tRvlxQ`));
+    beforeAll(async () => {
+      response = await request(app)
+        .get(`/search`)
+        .query({
+          query: `Рок — это протест`
+        });
     });
 
+    test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
+    test(`Expect 2 articles found`, () => expect(response.body.length).toBe(2));
+    test(`First found article id`, () => expect(response.body[0].id).toBe(`tRvlxQ`));
+  });
+
 test(`API returns 404 when search phrase is missing`,
-    () => request(app)
+  () => request(app)
     .get(`/search`)
     .query({
       query: `Спартак сила`
@@ -136,9 +134,9 @@ test(`API returns 404 when search phrase is missing`,
 );
 
 test(`API returns 400 when query string is absent`,
-    () => request(app)
-      .get(`/search`)
-      .expect(HttpCode.BAD_REQUEST)
+  () => request(app)
+    .get(`/search`)
+    .expect(HttpCode.BAD_REQUEST)
 );
 
 

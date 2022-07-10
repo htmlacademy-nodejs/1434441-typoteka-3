@@ -1,15 +1,20 @@
 'use strict';
 
 const DEFAULT_PORT = 3000;
-const FILENAME = `mocks.json`;
 
-const express = require('express');
+const express = require(`express`);
 const app = express();
 
-const fs = require(`fs`).promises;
+const getMockData = require(`../lib/get-mock-data`);
+const {HttpCode, API_PREFIX} = require(`../constants`);
+const routes = require(`../api`);
+
 const chalk = require(`chalk`);
 
 const notFoundMessageText = `Not Found`;
+
+app.use(express.json());
+app.use(API_PREFIX, routes);
 
 module.exports = {
   name: `--server`,
@@ -17,26 +22,24 @@ module.exports = {
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
 
-    app.get('/posts', async (req, res) => {
+    app.get(`/posts`, async (req, res) => {
 
-      try {
-        const mocksFile = await fs.readFile(FILENAME);
-        const mocks = JSON.parse(mocksFile);
-
-        if (!mocks || mocks.length === 0) {
-          res.send([])
-          return
+      const mocks = getMockData();
+      mocks.then((data) => {
+        if (!data || data.length === 0) {
+          res.send([]);
+          return;
         }
-        res.send(mocks);
+        res.send(data);
+      })
+        .catch(() =>
+          res.send(notFoundMessageText));
+    });
 
-      } catch (err) {
-        res.status(500).send(notFoundMessageText);
-      }
-    })
 
     app.use((req, res) => {
-      res.status(404).send(notFoundMessageText)
-    })
+      res.status(HttpCode.NOT_FOUND).send(notFoundMessageText);
+    });
 
     app
       .listen(port)
@@ -48,3 +51,4 @@ module.exports = {
       });
   }
 };
+

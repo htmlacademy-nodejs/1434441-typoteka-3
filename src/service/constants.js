@@ -12,7 +12,7 @@ module.exports.ExitCode = {
 module.exports.Env = {
   DEVELOPMENT: `development`,
   PRODUCTION: `production`,
-}
+};
 
 module.exports.API_PREFIX = `/api`;
 

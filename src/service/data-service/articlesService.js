@@ -34,8 +34,10 @@ class ArticlesService {
       return null;
     }
 
+    const deletedArticle = this._articles[articleIndex];
+
     this._articles = [...this._articles.slice(0, articleIndex), ...this._articles.slice(articleIndex + 1)];
-    return this._articles[articleIndex];
+    return deletedArticle;
   }
 }
 

@@ -9,6 +9,10 @@ module.exports.ExitCode = {
   error: 1,
   success: 0,
 };
+module.exports.Env = {
+  DEVELOPMENT: `development`,
+  PRODUCTION: `production`,
+};
 
 module.exports.API_PREFIX = `/api`;
 

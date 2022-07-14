@@ -50,7 +50,7 @@ const generateOffers = (count, titles, categories, descriptions, comments) => (
     announce: shuffle(descriptions).slice(0, getRandomInt(announceCount.min, announceCount.max)).join(` `),
     fulltext: shuffle(descriptions).slice(0, descriptions.length - 1).join(` `),
     createdDate: dayjs(randomDate).format(`YYYY-MM-DD HH:mm:ss`),
-    category: [shuffle(categories).slice(0, categories.length - 1).join(`, `)],
+    category: shuffle(categories).slice(0, categories.length - 1),
     comments: decomposeComments(shuffle(comments).slice(0, getRandomInt(commentsCount.min, commentsCount.max))),
   }))
 );

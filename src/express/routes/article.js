@@ -3,6 +3,8 @@
 const {Router} = require(`express`);
 const articleRouter = new Router();
 
+const api = require(`../api`).getAPI();
+
 articleRouter.get(`/post`, (req, res) => {
   res.render(`post`);
 });

@@ -37,7 +37,7 @@ class API {
   }
 
   createArticle(data) {
-    return this._load(`articles`, {metod: `POST`, data});
+    return this._load(`articles`, {method: `POST`, data});
   }
 }
 

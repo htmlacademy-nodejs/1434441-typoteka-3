@@ -15,8 +15,8 @@ class API {
     });
   }
 
-  async _load(request, options) {
-    const response = await this._http({request, ...options});
+  async _load(url, options) {
+    const response = await this._http({url, ...options});
     return response.data;
   }
 

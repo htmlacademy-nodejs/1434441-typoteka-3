@@ -3,6 +3,7 @@
 const express = require(`express`);
 const personalRoutes = require(`./routes/personal`);
 const articleRouter = require(`./routes/article`);
+const api = require(`./api`).getAPI();
 
 const app = express();
 
@@ -14,6 +15,11 @@ app.set(`view engine`, `pug`);
 
 app.use(express.static(__dirname + `/public`));
 
+app.get(`/`, async (req, res) => {
+  const articles = await api.getArticles();
+  res.render(`main`, {articles});
+});
+
 app.get(`/login`, (req, res) => {
   res.render(`login`);
 });
@@ -22,12 +28,14 @@ app.get(`/register`, (req, res) => {
   res.render(`sign-up`);
 });
 
-app.get(`/search`, (req, res) => {
-  res.render(`search`);
-});
-
-app.get(`/my`, (req, res) => {
-  res.render(`my`);
+app.get(`/search`, async (req, res) => {
+  try {
+    const {query} = req.query;
+    const results = await api.search(query);
+    res.render(`search`, {results});
+  } catch (err) {
+    res.render(`search`, {results: []});
+  }
 });
 
 app.get(`/404`, (req, res) => {
@@ -39,4 +47,4 @@ app.get(`/500`, (req, res) => {
 });
 
 app.use(`/my`, personalRoutes);
-app.use(`/article`, articleRouter);
+app.use(`/articles`, articleRouter);

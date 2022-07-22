@@ -8,7 +8,7 @@ block main
     section
       .popup.popup--new-publication.popup--anti
         .new-publication
-          form(action='/articles' method='POST' enctype='multipart/form-data' autocomplete='off')
+          form(action='/articles/add' method='POST' enctype='multipart/form-data' autocomplete='off')
             .new-publication__header
               h1 Новая публикация
               .new-publication__date-form
@@ -41,5 +41,5 @@ block main
                     textarea(rows='5' name='announcement' placeholder='Анонс публикации')
                 .form__field.form__field--publication-text
                   label
-                    textarea(rows='10' name='full-text' placeholder='Полный текст публикации')
+                    textarea(rows='10' name='fulltext' placeholder='Полный текст публикации')
 

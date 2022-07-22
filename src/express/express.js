@@ -13,7 +13,9 @@ app.listen(port);
 app.set(`views`, __dirname + `/templates`);
 app.set(`view engine`, `pug`);
 
+app.use(express.json());
 app.use(express.static(__dirname + `/public`));
+app.use(express.static(__dirname + `/upload`));
 
 app.get(`/`, async (req, res) => {
   const articles = await api.getArticles();

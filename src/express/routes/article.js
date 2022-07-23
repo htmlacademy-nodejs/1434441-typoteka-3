@@ -39,9 +39,9 @@ articleRouter.post(`/add`, upload.single(`upload`), async (req, res) => {
 
   try {
     await api.createArticle(articleData);
-    res.redirect(`/my`); // перенаправить на страницу с моими записями
+    res.redirect(`/my`);
   } catch (err) {
-    res.redirect(`back`); // перенаправить на страницу назад, т.е. на текущую
+    res.redirect(`back`);
   }
 });
 articleRouter.get(`/category/:id`, (req, res) => {
@@ -52,11 +52,17 @@ articleRouter.get(`/post/:id`, (req, res) => {
 });
 articleRouter.get(`/edit/:id`, async (req, res) => {
   const {id} = req.params;
-  const [article, categories] = await Promise.all([
+  const dataPromises = Promise.all([
     api.getArticle(id),
     api.getCategories()
   ]);
-  res.render(`edit-article`, {article, categories});
+
+  try {
+    const [article, categories] = await dataPromises;
+    res.render(`edit-article`, {article, categories});
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 module.exports = articleRouter;

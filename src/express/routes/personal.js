@@ -3,11 +3,16 @@
 const {Router} = require(`express`);
 const personalRouter = new Router();
 
-personalRouter.get(`/`, (req, res) => {
-  res.render(`main`);
+const api = require(`../api`).getAPI();
+
+personalRouter.get(`/`, async (req, res) => {
+  const articles = await api.getArticles();
+  res.render(`my`, {articles});
 });
-personalRouter.get(`/comments`, (req, res) => {
-  res.render(`comments`);
+personalRouter.get(`/comments`, async (req, res) => {
+  const articles = await api.getArticles();
+  const comments = articles.flatMap((article) => article.comments);
+  res.render(`comments`, {comments: comments.slice(0, 5)});
 });
 personalRouter.get(`/categories`, (req, res) => {
   res.render(`all-categories`);

@@ -13,4 +13,3 @@ module.exports = (app, categoriesService) => {
     res.status(HttpCode.OK).json(articles);
   });
 };
-
